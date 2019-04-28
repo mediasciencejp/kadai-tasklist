@@ -15,10 +15,12 @@ class TasksController extends Controller
      */
     public function index()
     {
+        $task = new Task;
+        $statuses_list = $task->statuses_list;
         $tasks = Task::all();
-
         return view('tasks.index', [
-            "tasks" => $tasks
+            "tasks" => $tasks,
+            "statuses_list" => $statuses_list
         ]);
     }
 
@@ -30,7 +32,6 @@ class TasksController extends Controller
     public function create()
     {
         $task = new Task;
-
         return view('tasks.create', [
             'task' => $task
         ]);
@@ -44,7 +45,12 @@ class TasksController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request, [
+            'status' => 'required|max:10',
+            'content' => 'required|max:191'
+        ]);
         $task = new Task;
+        $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
         return redirect('/');
@@ -58,9 +64,12 @@ class TasksController extends Controller
      */
     public function show($id)
     {
+        $task = new task;
+        $statuses_list = $task->statuses_list;
         $task = Task::find($id);
         return view('tasks.show', [
-            'task' => $task
+            'task' => $task,
+            'statuses_list' => $statuses_list
         ]);
     }
 
@@ -72,9 +81,12 @@ class TasksController extends Controller
      */
     public function edit($id)
     {
+        $task = new task;
+        $statuses_list = $task->statuses_list;
         $task = Task::find($id);
         return view('tasks.edit', [
-            'task' => $task
+            'task' => $task,
+            'statuses_list' => $statuses_list
         ]);
     }
 
@@ -87,7 +99,12 @@ class TasksController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request, [
+            'status' => 'required|max:10',
+            'content' => 'required|max:191'
+        ]);
         $task = Task::find($id);
+        $task->status = $request->status;
         $task->content = $request->content;
         $task->save();
         return redirect('/');

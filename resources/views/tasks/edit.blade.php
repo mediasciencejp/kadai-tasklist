@@ -7,6 +7,10 @@
         <div class="col-6">
             {!! Form::model($task, ['route' => ['tasks.update', $task->id], 'method' => 'put']) !!}
                 <div class="form-group">
+                    {!! Form::label('status', 'ステータス') !!}
+                    {!! Form::select('status', $statuses_list, $task["status"] , ['class' => 'form-control']) !!}
+                </div>
+                <div class="form-group">
                     {!! Form::label('content', 'メッセージ:') !!}
                     {!! Form::text('content', null, ['class' => 'form-control']) !!}
                 </div>

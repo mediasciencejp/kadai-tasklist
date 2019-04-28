@@ -9,7 +9,11 @@
             <td>{{ $task->id }}</td>
         </tr>
         <tr>
-            <td>メッセージ</td>
+            <th>ステータス</th>
+            <td>{{ $statuses_list[$task->status] }}</td>
+        </tr>
+        <tr>
+            <th>メッセージ</th>
             <td>{{ $task->content }}</td>
         </tr>
     </table>
